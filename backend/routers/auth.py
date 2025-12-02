@@ -18,7 +18,7 @@ class AuthResponse(BaseModel):
     user: User
 
 # Dependency to get database
-from server import get_db
+from database import get_db
 
 @router.post("/register", response_model=AuthResponse, status_code=status.HTTP_201_CREATED)
 async def register(user_data: UserCreate, db: AsyncIOMotorDatabase = Depends(get_db)):
