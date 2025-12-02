@@ -3,7 +3,7 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from datetime import datetime
 
 from utils import get_current_user
-from server import get_db
+from database import get_db
 
 router = APIRouter(prefix="/notifications", tags=["notifications"])
 

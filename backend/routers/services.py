@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 
 from models import Service, ServiceCreate, ServiceUpdate, UserRole
 from utils import get_current_user
-from server import get_db
+from database import get_db
 
 router = APIRouter(prefix="/services", tags=["services"])
 

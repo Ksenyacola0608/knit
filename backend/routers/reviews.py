@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 from models import Review, ReviewCreate, OrderStatus, NotificationCreate, NotificationType
 from utils import get_current_user
-from server import get_db
+from database import get_db
 
 router = APIRouter(prefix="/reviews", tags=["reviews"])
 
