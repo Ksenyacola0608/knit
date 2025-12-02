@@ -1,10 +1,12 @@
 from fastapi import FastAPI, APIRouter
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 import os
 import logging
 from pathlib import Path
+
+# Import database
+from database import client, db, get_db
 
 # Import routers
 from routers import (
@@ -19,15 +21,6 @@ from routers import (
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
-
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ.get('DB_NAME', 'handcraft_platform')]
-
-# Dependency to get database
-def get_db() -> AsyncIOMotorDatabase:
-    return db
 
 # Create the main app without a prefix
 app = FastAPI(title="Handcraft Platform API", version="1.0.0")
