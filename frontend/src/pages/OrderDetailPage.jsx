@@ -36,6 +36,16 @@ const OrderDetailPage = () => {
       if (response.data.deadline) {
         setDeadline(new Date(response.data.deadline).toISOString().split('T')[0]);
       }
+      
+      // Check if review exists
+      if (response.data.status === 'completed' && user.id === response.data.customer_id) {
+        try {
+          const reviewResp = await api.get(`/reviews/order/${id}`);
+          setHasReview(reviewResp.data.review !== null);
+        } catch (error) {
+          setHasReview(false);
+        }
+      }
     } catch (error) {
       toast.error('Ошибка загрузки заказа');
       navigate('/orders');
