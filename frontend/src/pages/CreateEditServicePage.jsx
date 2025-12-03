@@ -184,6 +184,28 @@ const CreateEditServicePage = () => {
               </div>
             </div>
 
+            {/* Service Images */}
+            {id && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Фотографии услуги
+                </label>
+                <ServiceImageUpload
+                  serviceId={id}
+                  currentImages={formData.images}
+                  onImagesChange={(images) => setFormData({ ...formData, images })}
+                />
+              </div>
+            )}
+
+            {!id && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p className="text-sm text-blue-800">
+                  💡 Сохраните услугу, чтобы добавить фотографии
+                </p>
+              </div>
+            )}
+
             {/* Buttons */}
             <div className="flex gap-4 pt-6">
               <Link
