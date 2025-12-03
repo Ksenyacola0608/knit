@@ -46,7 +46,8 @@ const CreateEditServicePage = () => {
         description: service.description,
         category: service.category,
         price: service.price,
-        duration_days: service.duration_days || ''
+        duration_days: service.duration_days || '',
+        images: service.images || []
       });
     } catch (error) {
       toast.error('Ошибка загрузки услуги');
