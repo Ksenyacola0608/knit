@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Users, Package, Star } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const HomePage = () => {
+  const { user } = useAuth();
+  
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
