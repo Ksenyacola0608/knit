@@ -75,10 +75,25 @@ const ProfilePage = () => {
           <div className="px-8 pb-8">
             {/* Avatar */}
             <div className="-mt-16 mb-6">
-              <div className="w-32 h-32 rounded-full bg-white border-4 border-white shadow-lg flex items-center justify-center">
-                <div className="w-28 h-28 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center text-white text-4xl font-bold">
-                  {user.name.charAt(0)}
-                </div>
+              <div className="w-32 h-32 rounded-full bg-white border-4 border-white shadow-lg flex items-center justify-center overflow-hidden">
+                {editing ? (
+                  <AvatarUpload 
+                    currentAvatar={user.avatar}
+                    onUploadSuccess={(avatarUrl) => {
+                      updateUser({ ...user, avatar: avatarUrl });
+                    }}
+                  />
+                ) : user.avatar ? (
+                  <img 
+                    src={`${process.env.REACT_APP_BACKEND_URL}${user.avatar}`}
+                    alt={user.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-28 h-28 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center text-white text-4xl font-bold">
+                    {user.name.charAt(0)}
+                  </div>
+                )}
               </div>
             </div>
 
