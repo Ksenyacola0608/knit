@@ -172,32 +172,64 @@ const OrderDetailPage = () => {
               {/* Customer */}
               {order.customer && (
                 <div className="border border-gray-200 rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center gap-3 mb-3">
                     <User size={20} className="text-gray-400" />
                     <h4 className="font-semibold text-gray-900">Заказчик</h4>
                   </div>
-                  <p className="text-lg font-bold text-gray-900">{order.customer.name}</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center overflow-hidden flex-shrink-0">
+                      {order.customer.avatar ? (
+                        <img 
+                          src={`${process.env.REACT_APP_BACKEND_URL}${order.customer.avatar}`}
+                          alt={order.customer.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-white text-lg font-bold">
+                          {order.customer.name.charAt(0)}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-lg font-bold text-gray-900">{order.customer.name}</p>
+                  </div>
                 </div>
               )}
 
               {/* Master */}
               {order.master && (
                 <div className="border border-gray-200 rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center gap-3 mb-3">
                     <Package size={20} className="text-gray-400" />
                     <h4 className="font-semibold text-gray-900">Мастер</h4>
                   </div>
-                  <Link
-                    to={`/masters/${order.master.id}`}
-                    className="text-lg font-bold text-indigo-600 hover:text-indigo-700"
-                  >
-                    {order.master.name}
-                  </Link>
-                  {order.master.rating > 0 && (
-                    <p className="text-sm text-gray-600 mt-1">
-                      ⭐ {order.master.rating.toFixed(1)}
-                    </p>
-                  )}
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center overflow-hidden flex-shrink-0">
+                      {order.master.avatar ? (
+                        <img 
+                          src={`${process.env.REACT_APP_BACKEND_URL}${order.master.avatar}`}
+                          alt={order.master.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-white text-lg font-bold">
+                          {order.master.name.charAt(0)}
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      <Link
+                        to={`/masters/${order.master.id}`}
+                        className="text-lg font-bold text-indigo-600 hover:text-indigo-700"
+                      >
+                        {order.master.name}
+                      </Link>
+                      {order.master.rating > 0 && (
+                        <p className="text-sm text-gray-600">
+                          ⭐ {order.master.rating.toFixed(1)}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
