@@ -17,8 +17,13 @@ const ServicesPage = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
-    fetchServices();
-  }, [search, category]);
+    if (!user) {
+      setShowAuthModal(true);
+      setLoading(false);
+    } else {
+      fetchServices();
+    }
+  }, [search, category, user]);
 
   const fetchServices = async () => {
     try {
@@ -36,11 +41,6 @@ const ServicesPage = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const getCategoryLabel = (value) => {
-    const cat = categories.find(c => c.value === value);
-    return cat ? cat.label : value;
   };
 
   return (
