@@ -42,7 +42,7 @@ function App() {
               <Route path="/my-services" element={<MyServicesPage />} />
               <Route path="/my-services/create" element={<CreateEditServicePage />} />
               <Route path="/my-services/edit/:id" element={<CreateEditServicePage />} />
-              <Route path="/masters/:id" element={<ProfilePage />} />
+              <Route path="/masters/:id" element={<MasterProfilePage />} />
               <Route path="/masters/:masterId/reviews" element={<MasterReviewsPage />} />
               <Route path="/notifications" element={<NotificationsPage />} />
             </Routes>
