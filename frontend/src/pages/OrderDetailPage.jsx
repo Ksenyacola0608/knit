@@ -4,6 +4,7 @@ import { ArrowLeft, Clock, User, Package, Calendar } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
 import { toast } from 'sonner';
+import ReviewForm from '../components/ReviewForm';
 
 const OrderDetailPage = () => {
   const { id } = useParams();
