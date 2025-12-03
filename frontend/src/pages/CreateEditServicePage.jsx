@@ -4,6 +4,8 @@ import { ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
 import { toast } from 'sonner';
+import { categories } from '../utils/categories';
+import ServiceImageUpload from '../components/ServiceImageUpload';
 
 const CreateEditServicePage = () => {
   const { id } = useParams();
