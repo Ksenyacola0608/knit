@@ -19,6 +19,7 @@ import OrdersPage from "./pages/OrdersPage";
 import OrderDetailPage from "./pages/OrderDetailPage";
 import MyServicesPage from "./pages/MyServicesPage";
 import CreateEditServicePage from "./pages/CreateEditServicePage";
+import NotificationsPage from "./pages/NotificationsPage";
 
 function App() {
   return (
