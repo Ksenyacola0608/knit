@@ -13,6 +13,12 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ServicesPage from "./pages/ServicesPage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
+import ProfilePage from "./pages/ProfilePage";
+import OrdersPage from "./pages/OrdersPage";
+import OrderDetailPage from "./pages/OrderDetailPage";
+import MyServicesPage from "./pages/MyServicesPage";
+import CreateEditServicePage from "./pages/CreateEditServicePage";
 
 function App() {
   return (
@@ -26,6 +32,14 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/services" element={<ServicesPage />} />
+              <Route path="/services/:id" element={<ServiceDetailPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/orders/:id" element={<OrderDetailPage />} />
+              <Route path="/my-services" element={<MyServicesPage />} />
+              <Route path="/my-services/create" element={<CreateEditServicePage />} />
+              <Route path="/my-services/edit/:id" element={<CreateEditServicePage />} />
+              <Route path="/masters/:id" element={<ProfilePage />} />
             </Routes>
           </main>
           <Footer />
