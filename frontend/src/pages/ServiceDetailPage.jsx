@@ -100,41 +100,21 @@ const ServiceDetailPage = () => {
           {/* Main Content */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              {/* Main Service Image */}
-              <div className="h-96 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center overflow-hidden">
+              {/* Image Gallery */}
+              <div className="p-8">
                 {service.images && service.images.length > 0 ? (
-                  <img 
-                    src={`${process.env.REACT_APP_BACKEND_URL}${service.images[0]}`}
-                    alt={service.title}
-                    className="w-full h-full object-contain p-4"
-                  />
+                  <ImageGallery images={service.images} altPrefix={service.title} />
                 ) : (
-                  <div className="text-center p-8">
-                    <p className="text-9xl">🎨</p>
+                  <div className="h-96 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center rounded-lg">
+                    <div className="text-center p-8">
+                      <p className="text-9xl">🎨</p>
+                    </div>
                   </div>
                 )}
               </div>
 
-              {/* Additional Images Gallery */}
-              {service.images && service.images.length > 1 && (
-                <div className="px-8 pt-6 border-t border-gray-100">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Дополнительные фото</h3>
-                  <div className="grid grid-cols-4 gap-4">
-                    {service.images.slice(1).map((image, idx) => (
-                      <div key={idx} className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
-                        <img 
-                          src={`${process.env.REACT_APP_BACKEND_URL}${image}`}
-                          alt={`${service.title} - фото ${idx + 2}`}
-                          className="w-full h-full object-contain p-2"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {/* Service Info */}
-              <div className="p-8">
+              <div className="p-8 pt-0">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-sm font-semibold text-indigo-600 bg-indigo-50 px-4 py-2 rounded-full">
                     {getCategoryLabel(service.category)}
