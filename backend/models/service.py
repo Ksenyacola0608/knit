@@ -7,7 +7,7 @@ class ServiceCategory(str, Enum):
     KNITTING = "knitting"
     EMBROIDERY = "embroidery"
     SEWING = "sewing"
-    CROCHET = "crochet"
+    FELTING = "felting"
     JEWELRY = "jewelry"
     POTTERY = "pottery"
     WOODWORKING = "woodworking"
