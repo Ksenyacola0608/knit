@@ -112,9 +112,17 @@ const MyServicesPage = () => {
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
               >
                 <div className="h-48 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
-                  <div className="text-center p-4">
-                    <p className="text-6xl">🎨</p>
-                  </div>
+                  {service.images && service.images.length > 0 ? (
+                    <img 
+                      src={`${process.env.REACT_APP_BACKEND_URL}${service.images[0]}`}
+                      alt={service.title}
+                      className="w-full h-full object-contain p-2"
+                    />
+                  ) : (
+                    <div className="text-center p-4">
+                      <p className="text-6xl">🎨</p>
+                    </div>
+                  )}
                 </div>
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-2">
