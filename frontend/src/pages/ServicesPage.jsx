@@ -17,12 +17,7 @@ const ServicesPage = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
-    if (!user) {
-      setShowAuthModal(true);
-      setLoading(false);
-    } else {
-      fetchServices();
-    }
+    fetchServices();
   }, [search, category, user]);
 
   const fetchServices = async () => {
