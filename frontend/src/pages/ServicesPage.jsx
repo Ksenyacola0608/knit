@@ -144,7 +144,7 @@ const ServicesPage = () => {
                     <img 
                       src={`${process.env.REACT_APP_BACKEND_URL}${service.images[0]}`}
                       alt={service.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain p-2"
                     />
                   ) : (
                     <div className="text-center p-4">
