@@ -10,6 +10,7 @@ class NotificationType(str, Enum):
     ORDER_COMPLETED = "order_completed"
     NEW_MESSAGE = "new_message"
     NEW_REVIEW = "new_review"
+    REVIEW_DISPUTED = "review_disputed"
 
 class NotificationCreate(BaseModel):
     user_id: str
