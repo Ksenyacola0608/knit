@@ -18,6 +18,7 @@ from routers import (
     messages_router,
     notifications_router
 )
+from routers.upload import router as upload_router
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
