@@ -18,20 +18,8 @@ const CreateEditServicePage = () => {
     category: 'knitting',
     price: '',
     duration_days: '',
+    images: []
   });
-
-  const categories = [
-    { value: 'knitting', label: 'Вязание' },
-    { value: 'embroidery', label: 'Вышивка' },
-    { value: 'sewing', label: 'Шитьё' },
-    { value: 'crochet', label: 'Крючок' },
-    { value: 'jewelry', label: 'Украшения' },
-    { value: 'pottery', label: 'Керамика' },
-    { value: 'woodworking', label: 'Столярное дело' },
-    { value: 'painting', label: 'Живопись' },
-    { value: 'soap_making', label: 'Мыловарение' },
-    { value: 'other', label: 'Другое' }
-  ];
 
   useEffect(() => {
     if (!user) {
