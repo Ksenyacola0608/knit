@@ -4,6 +4,7 @@ import { User, Mail, Phone, Edit2, Save, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
 import { toast } from 'sonner';
+import AvatarUpload from '../components/AvatarUpload';
 
 const ProfilePage = () => {
   const { user, updateUser } = useAuth();
