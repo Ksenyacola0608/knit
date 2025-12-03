@@ -83,7 +83,7 @@ async def get_service(
         service_doc["views"] = service_doc.get("views", 0) + 1
         
         # Store view record with TTL (1 hour)
-        from datetime import datetime, timezone, timedelta
+        from datetime import timedelta
         await db.service_views.insert_one({
             "key": view_key,
             "service_id": service_id,
