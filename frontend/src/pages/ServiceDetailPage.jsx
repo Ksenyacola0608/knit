@@ -100,10 +100,18 @@ const ServiceDetailPage = () => {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               {/* Service Image */}
-              <div className="h-96 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
-                <div className="text-center p-8">
-                  <p className="text-9xl">🎨</p>
-                </div>
+              <div className="h-96 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center overflow-hidden">
+                {service.images && service.images.length > 0 ? (
+                  <img 
+                    src={`${process.env.REACT_APP_BACKEND_URL}${service.images[0]}`}
+                    alt={service.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="text-center p-8">
+                    <p className="text-9xl">🎨</p>
+                  </div>
+                )}
               </div>
 
               {/* Service Info */}
