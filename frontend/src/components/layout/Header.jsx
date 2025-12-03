@@ -46,22 +46,17 @@ const Header = () => {
                 <Link to="/orders" className="text-gray-700 hover:text-indigo-600 transition">
                   Заказы
                 </Link>
-                <Link to="/chat" className="relative text-gray-700 hover:text-indigo-600 transition">
-                  <MessageSquare size={20} />
-                  {unreadMessages > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {unreadMessages}
-                    </span>
-                  )}
-                </Link>
-                <Link to="/notifications" className="relative text-gray-700 hover:text-indigo-600 transition">
-                  <Bell size={20} />
-                  {unreadNotifications > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {unreadNotifications}
-                    </span>
-                  )}
-                </Link>
+                {(user.role === 'master' || user.role === 'admin') && (
+                  <Link to="/my-services" className="text-gray-700 hover:text-indigo-600 transition flex items-center gap-2">
+                    <Package size={18} />
+                    Мои услуги
+                  </Link>
+                )}
+                {user.role === 'admin' && (
+                  <Link to="/admin" className="text-red-600 hover:text-red-700 transition font-semibold">
+                    👑 Админ
+                  </Link>
+                )}
               </>
             )}
           </nav>
