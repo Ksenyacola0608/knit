@@ -43,6 +43,39 @@ const ServicesPage = () => {
     }
   };
 
+  // Auth Modal
+  if (showAuthModal || !user) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center">
+          <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Lock size={40} className="text-indigo-600" />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Требуется авторизация
+          </h2>
+          <p className="text-gray-600 mb-8">
+            Для просмотра каталога услуг необходимо войти в систему или зарегистрироваться
+          </p>
+          <div className="flex flex-col gap-4">
+            <Link
+              to="/login"
+              className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition"
+            >
+              Войти
+            </Link>
+            <Link
+              to="/register"
+              className="w-full bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"
+            >
+              Зарегистрироваться
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
