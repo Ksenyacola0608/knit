@@ -75,24 +75,23 @@ async def get_service(
     client_ip = request.client.host if request.client else "unknown"
     view_key = f"view_{service_id}_{client_ip}"
     
-    # Check if already viewed in last hour
+    # Check if already viewed (ever, not just 1 hour)
     view_record = await db.service_views.find_one({"key": view_key})
     if not view_record:
-        # First view - increment counter
-        await db.services.update_one({"id": service_id}, {"$inc": {"views": 1}})
-        service_doc["views"] = service_doc.get("views", 0) + 1
+        # First view ever - increment counter
+        result = await db.services.find_one_and_update(
+            {"id": service_id},
+            {"$inc": {"views": 1}},
+            return_document=True
+        )
+        service_doc["views"] = result.get("views", 0)
         
-        # Store view record with TTL (1 hour)
-        from datetime import timedelta
+        # Store view record permanently
         await db.service_views.insert_one({
             "key": view_key,
             "service_id": service_id,
-            "created_at": datetime.now(timezone.utc),
-            "expires_at": datetime.now(timezone.utc) + timedelta(hours=1)
+            "created_at": datetime.now(timezone.utc)
         })
-    else:
-        # Already viewed - don't increment
-        service_doc["views"] = service_doc.get("views", 0)
     
     # Get master info
     master = await db.users.find_one(
