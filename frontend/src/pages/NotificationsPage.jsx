@@ -37,7 +37,9 @@ const NotificationsPage = () => {
   const markAsRead = async (notificationId) => {
     try {
       await api.patch(`/notifications/${notificationId}/read`);
-      fetchNotifications();
+      await fetchNotifications();
+      // Trigger event to update header counter
+      window.dispatchEvent(new Event('notificationRead'));
     } catch (error) {
       console.error('Error marking as read:', error);
     }
