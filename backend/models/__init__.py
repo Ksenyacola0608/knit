@@ -1,7 +1,7 @@
 from .user import User, UserCreate, UserUpdate, UserPublic, UserRole
 from .service import Service, ServiceCreate, ServiceUpdate, ServiceCategory
 from .order import Order, OrderCreate, OrderUpdateStatus, OrderStatus
-from .review import Review, ReviewCreate
+from .review import Review, ReviewCreate, ReviewDispute
 from .message import Message, MessageCreate
 from .notification import Notification, NotificationCreate, NotificationType
 
