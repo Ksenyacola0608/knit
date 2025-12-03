@@ -57,9 +57,10 @@ async def get_user_profile(
     user_id: str,
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
+    # Публичный профиль - скрываем email и phone
     user_doc = await db.users.find_one(
         {"id": user_id},
-        {"_id": 0, "password_hash": 0, "email": 0, "phone": 0}
+        {"_id": 0, "password_hash": 0, "email": 0, "phone": 0, "updated_at": 0}
     )
     if not user_doc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
