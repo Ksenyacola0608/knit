@@ -164,15 +164,47 @@ const OrdersPage = () => {
                   </p>
 
                   <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                    <div className="flex items-center gap-6 text-sm text-gray-600">
+                    <div className="flex items-center gap-6 text-sm">
                       {order.master && order.customer_id === user.id && (
-                        <div>
-                          <span className="font-semibold">Мастер:</span> {order.master.name}
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center overflow-hidden flex-shrink-0">
+                            {order.master.avatar ? (
+                              <img 
+                                src={`${process.env.REACT_APP_BACKEND_URL}${order.master.avatar}`}
+                                alt={order.master.name}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-white text-xs font-bold">
+                                {order.master.name.charAt(0)}
+                              </span>
+                            )}
+                          </div>
+                          <div>
+                            <span className="font-semibold text-gray-700">Мастер:</span>
+                            <span className="text-gray-600 ml-1">{order.master.name}</span>
+                          </div>
                         </div>
                       )}
                       {order.customer && order.master_id === user.id && (
-                        <div>
-                          <span className="font-semibold">Заказчик:</span> {order.customer.name}
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center overflow-hidden flex-shrink-0">
+                            {order.customer.avatar ? (
+                              <img 
+                                src={`${process.env.REACT_APP_BACKEND_URL}${order.customer.avatar}`}
+                                alt={order.customer.name}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-white text-xs font-bold">
+                                {order.customer.name.charAt(0)}
+                              </span>
+                            )}
+                          </div>
+                          <div>
+                            <span className="font-semibold text-gray-700">Заказчик:</span>
+                            <span className="text-gray-600 ml-1">{order.customer.name}</span>
+                          </div>
                         </div>
                       )}
                     </div>
