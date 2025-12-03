@@ -99,7 +99,7 @@ const ServiceDetailPage = () => {
           {/* Main Content */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              {/* Service Image */}
+              {/* Main Service Image */}
               <div className="h-96 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center overflow-hidden">
                 {service.images && service.images.length > 0 ? (
                   <img 
@@ -113,6 +113,24 @@ const ServiceDetailPage = () => {
                   </div>
                 )}
               </div>
+
+              {/* Additional Images Gallery */}
+              {service.images && service.images.length > 1 && (
+                <div className="px-8 pt-6 border-t border-gray-100">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Дополнительные фото</h3>
+                  <div className="grid grid-cols-4 gap-4">
+                    {service.images.slice(1).map((image, idx) => (
+                      <div key={idx} className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                        <img 
+                          src={`${process.env.REACT_APP_BACKEND_URL}${image}`}
+                          alt={`${service.title} - фото ${idx + 2}`}
+                          className="w-full h-full object-contain p-2"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Service Info */}
               <div className="p-8">
