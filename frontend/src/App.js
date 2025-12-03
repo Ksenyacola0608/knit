@@ -41,6 +41,7 @@ function App() {
               <Route path="/my-services/create" element={<CreateEditServicePage />} />
               <Route path="/my-services/edit/:id" element={<CreateEditServicePage />} />
               <Route path="/masters/:id" element={<ProfilePage />} />
+              <Route path="/notifications" element={<NotificationsPage />} />
             </Routes>
           </main>
           <Footer />
