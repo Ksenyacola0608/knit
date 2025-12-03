@@ -9,7 +9,7 @@ __all__ = [
     "User", "UserCreate", "UserUpdate", "UserPublic", "UserRole",
     "Service", "ServiceCreate", "ServiceUpdate", "ServiceCategory",
     "Order", "OrderCreate", "OrderUpdateStatus", "OrderStatus",
-    "Review", "ReviewCreate",
+    "Review", "ReviewCreate", "ReviewDispute",
     "Message", "MessageCreate",
     "Notification", "NotificationCreate", "NotificationType"
 ]
