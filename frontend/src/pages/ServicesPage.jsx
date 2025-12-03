@@ -21,6 +21,12 @@ const ServicesPage = () => {
   }, [search, category, user]);
 
   const fetchServices = async () => {
+    if (!user) {
+      setShowAuthModal(true);
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       const params = {};
@@ -30,6 +36,7 @@ const ServicesPage = () => {
       const response = await api.get('/services', { params });
       setServices(response.data.services);
       setTotal(response.data.total);
+      setShowAuthModal(false);
     } catch (error) {
       toast.error('Ошибка загрузки услуг');
       console.error(error);
