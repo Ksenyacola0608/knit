@@ -1,29 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Search, Filter } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Search, Filter, Lock } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
 import { toast } from 'sonner';
+import { categories, getCategoryLabel } from '../utils/categories';
 
 const ServicesPage = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
   const [total, setTotal] = useState(0);
-
-  const categories = [
-    { value: '', label: 'Все категории' },
-    { value: 'knitting', label: 'Вязание' },
-    { value: 'embroidery', label: 'Вышивка' },
-    { value: 'sewing', label: 'Шитьё' },
-    { value: 'crochet', label: 'Крючок' },
-    { value: 'jewelry', label: 'Украшения' },
-    { value: 'pottery', label: 'Керамика' },
-    { value: 'woodworking', label: 'Столярное дело' },
-    { value: 'painting', label: 'Живопись' },
-    { value: 'soap_making', label: 'Мыловарение' },
-    { value: 'other', label: 'Другое' }
-  ];
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
     fetchServices();
