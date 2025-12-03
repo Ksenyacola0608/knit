@@ -57,22 +57,24 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Вы мастер?</h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Зарегистрируйтесь и начните получать заказы уже сегодня
-          </p>
-          <Link
-            to="/register"
-            data-testid="register-as-master-button"
-            className="inline-block bg-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition"
-          >
-            Зарегистрироваться как мастер
-          </Link>
-        </div>
-      </section>
+      {/* CTA Section - только для не-мастеров */}
+      {(!user || user.role === 'customer') && (
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold mb-6">Вы мастер?</h2>
+            <p className="text-xl text-gray-600 mb-8">
+              Зарегистрируйтесь и начните получать заказы уже сегодня
+            </p>
+            <Link
+              to="/register"
+              data-testid="register-as-master-button"
+              className="inline-block bg-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition"
+            >
+              Зарегистрироваться как мастер
+            </Link>
+          </div>
+        </section>
+      )}
     </div>
   );
 };
