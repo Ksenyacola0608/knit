@@ -1,78 +1,168 @@
-import React, { useEffect, useState } from 'react';
-import api from '../utils/api';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Star } from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
+import api from '../utils/api';
 import { toast } from 'sonner';
 
 const ServicesPage = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('');
+  const [total, setTotal] = useState(0);
+
+  const categories = [
+    { value: '', label: 'Все категории' },
+    { value: 'knitting', label: 'Вязание' },
+    { value: 'embroidery', label: 'Вышивка' },
+    { value: 'sewing', label: 'Шитьё' },
+    { value: 'crochet', label: 'Крючок' },
+    { value: 'jewelry', label: 'Украшения' },
+    { value: 'pottery', label: 'Керамика' },
+    { value: 'woodworking', label: 'Столярное дело' },
+    { value: 'painting', label: 'Живопись' },
+    { value: 'soap_making', label: 'Мыловарение' },
+    { value: 'other', label: 'Другое' }
+  ];
 
   useEffect(() => {
     fetchServices();
-  }, []);
+  }, [search, category]);
 
   const fetchServices = async () => {
     try {
-      const response = await api.get('/services?limit=50');
-      setServices(response.data.services || []);
+      setLoading(true);
+      const params = {};
+      if (search) params.search = search;
+      if (category) params.category = category;
+      
+      const response = await api.get('/services', { params });
+      setServices(response.data.services);
+      setTotal(response.data.total);
     } catch (error) {
       toast.error('Ошибка загрузки услуг');
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) {
-    return <div className="container mx-auto px-4 py-8">Загрузка...</div>;
-  }
+  const getCategoryLabel = (value) => {
+    const cat = categories.find(c => c.value === value);
+    return cat ? cat.label : value;
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Каталог услуг</h1>
-
-      {services.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-600 text-lg">Услуг пока нет. Станьте первым мастером!</p>
-          <Link to="/register" className="inline-block mt-4 text-indigo-600 hover:text-indigo-700">
-            Зарегистрироваться как мастер
-          </Link>
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Каталог услуг</h1>
+          <p className="text-lg text-gray-600">
+            Найдено услуг: {total}
+          </p>
         </div>
-      ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service) => (
-            <Link
-              key={service.id}
-              to={`/services/${service.id}`}
-              data-testid={`service-card-${service.id}`}
-              className="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden"
-            >
-              {service.images && service.images[0] && (
-                <img
-                  src={service.images[0]}
-                  alt={service.title}
-                  className="w-full h-48 object-cover"
-                />
-              )}
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                <p className="text-gray-600 mb-4 line-clamp-2">{service.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-indigo-600">
-                    {service.price} ₽
-                  </span>
-                  {service.master_rating > 0 && (
-                    <div className="flex items-center">
-                      <Star size={16} className="text-yellow-400 fill-current" />
-                      <span className="ml-1 text-sm">{service.master_rating.toFixed(1)}</span>
+
+        {/* Filters */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <div className="grid md:grid-cols-2 gap-4">
+            {/* Search */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                type="text"
+                placeholder="Поиск услуг..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+
+            {/* Category Filter */}
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none bg-white"
+              >
+                {categories.map(cat => (
+                  <option key={cat.value} value={cat.value}>{cat.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Services Grid */}
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+            <p className="mt-4 text-gray-600">Загрузка услуг...</p>
+          </div>
+        ) : services.length === 0 ? (
+          <div className="text-center py-12 bg-white rounded-lg shadow-md">
+            <p className="text-xl text-gray-600">Услуги не найдены</p>
+            <p className="text-gray-500 mt-2">Попробуйте изменить фильтры</p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map(service => (
+              <Link
+                key={service.id}
+                to={`/services/${service.id}`}
+                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition group"
+              >
+                <div className="h-48 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
+                  <div className="text-center p-4">
+                    <p className="text-6xl">🎨</p>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">
+                      {getCategoryLabel(service.category)}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {service.views || 0} просмотров
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 line-clamp-2">
+                    {service.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-2xl font-bold text-indigo-600">
+                        {service.price.toLocaleString()} ₽
+                      </p>
+                      {service.duration_days && (
+                        <p className="text-sm text-gray-500">
+                          Срок: {service.duration_days} дн.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  {service.master_name && (
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                      <p className="text-sm text-gray-600">
+                        Мастер: <span className="font-semibold">{service.master_name}</span>
+                      </p>
+                      {service.master_rating > 0 && (
+                        <p className="text-sm text-gray-600">
+                          ⭐ {service.master_rating.toFixed(1)}
+                        </p>
+                      )}
                     </div>
                   )}
                 </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
