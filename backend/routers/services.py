@@ -63,15 +63,36 @@ async def get_services(
 @router.get("/{service_id}", response_model=dict)
 async def get_service(
     service_id: str,
+    request: Request,
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     service_doc = await db.services.find_one({"id": service_id}, {"_id": 0})
     if not service_doc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Service not found")
     
-    # Increment views
-    await db.services.update_one({"id": service_id}, {"$inc": {"views": 1}})
-    service_doc["views"] = service_doc.get("views", 0) + 1
+    # Increment views only once per session
+    # Use IP address + service_id as unique identifier
+    client_ip = request.client.host if request.client else "unknown"
+    view_key = f"view_{service_id}_{client_ip}"
+    
+    # Check if already viewed in last hour
+    view_record = await db.service_views.find_one({"key": view_key})
+    if not view_record:
+        # First view - increment counter
+        await db.services.update_one({"id": service_id}, {"$inc": {"views": 1}})
+        service_doc["views"] = service_doc.get("views", 0) + 1
+        
+        # Store view record with TTL (1 hour)
+        from datetime import datetime, timezone, timedelta
+        await db.service_views.insert_one({
+            "key": view_key,
+            "service_id": service_id,
+            "created_at": datetime.now(timezone.utc),
+            "expires_at": datetime.now(timezone.utc) + timedelta(hours=1)
+        })
+    else:
+        # Already viewed - don't increment
+        service_doc["views"] = service_doc.get("views", 0)
     
     # Get master info
     master = await db.users.find_one(
