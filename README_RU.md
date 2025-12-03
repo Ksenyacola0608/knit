@@ -52,7 +52,7 @@ HandyCraft - это веб-платформа для заказа услуг м�
 
 Ваше приложение развернуто и работает на платформе Emergent:
 
-**URL приложения**: https://handycraft-6.preview.emergentagent.com
+**URL приложения**: https://crafty-connect.preview.emergentagent.com
 
 ### Текущий статус сервисов:
 ```bash
@@ -63,9 +63,9 @@ HandyCraft - это веб-платформа для заказа услуг м�
 ```
 
 ### Доступ к приложению:
-- **Frontend**: https://handycraft-6.preview.emergentagent.com
-- **Backend API**: https://handycraft-6.preview.emergentagent.com/api
-- **Health Check**: https://handycraft-6.preview.emergentagent.com/api/health
+- **Frontend**: https://crafty-connect.preview.emergentagent.com
+- **Backend API**: https://crafty-connect.preview.emergentagent.com/api
+- **Health Check**: https://crafty-connect.preview.emergentagent.com/api/health
 
 ### Проверка работы:
 ```bash

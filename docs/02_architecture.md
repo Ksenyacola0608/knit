@@ -573,5 +573,5 @@ JWT_EXPIRATION=1440  # 24 hours in minutes
 
 **Frontend (.env)**
 ```
-REACT_APP_BACKEND_URL=https://handycraft-6.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://crafty-connect.preview.emergentagent.com
 ```
