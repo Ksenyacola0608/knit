@@ -4,6 +4,7 @@ import { MapPin, Clock, Eye, Package, ArrowLeft } from 'lucide-react';
 import api from '../utils/api';
 import { toast } from 'sonner';
 import { useAuth } from '../context/AuthContext';
+import ImageGallery from '../components/ImageGallery';
 
 const ServiceDetailPage = () => {
   const { id } = useParams();
