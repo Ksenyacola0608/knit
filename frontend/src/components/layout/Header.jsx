@@ -47,6 +47,14 @@ const Header = () => {
                     Мои услуги
                   </Link>
                 )}
+                <Link to="/notifications" className="relative text-gray-700 hover:text-indigo-600 transition">
+                  <Bell size={20} />
+                  {unreadNotifications > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
+                      {unreadNotifications > 99 ? '99+' : unreadNotifications}
+                    </span>
+                  )}
+                </Link>
                 {user.role === 'admin' && (
                   <Link to="/admin" className="text-red-600 hover:text-red-700 transition font-semibold">
                     👑 Админ
