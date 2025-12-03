@@ -160,9 +160,12 @@ const ServiceDetailPage = () => {
                       {service.master.name}
                     </Link>
                     {service.master.rating > 0 && (
-                      <p className="text-lg text-gray-600 mt-1">
+                      <Link
+                        to={`/masters/${service.master.id}/reviews`}
+                        className="text-lg text-indigo-600 hover:text-indigo-700 mt-1 inline-block"
+                      >
                         ⭐ {service.master.rating.toFixed(1)} ({service.master.total_reviews} отзывов)
-                      </p>
+                      </Link>
                     )}
                     <p className="text-gray-600 mt-1">
                       Выполнено заказов: {service.master.completed_orders}
