@@ -20,6 +20,7 @@ import OrderDetailPage from "./pages/OrderDetailPage";
 import MyServicesPage from "./pages/MyServicesPage";
 import CreateEditServicePage from "./pages/CreateEditServicePage";
 import NotificationsPage from "./pages/NotificationsPage";
+import MasterReviewsPage from "./pages/MasterReviewsPage";
 
 function App() {
   return (
