@@ -12,6 +12,18 @@ const Header = () => {
   useEffect(() => {
     if (user) {
       fetchUnreadCounts();
+      const interval = setInterval(fetchUnreadCounts, 30000);
+      
+      // Listen for notification read events
+      const handleNotificationRead = () => {
+        fetchUnreadCounts();
+      };
+      window.addEventListener('notificationRead', handleNotificationRead);
+      
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener('notificationRead', handleNotificationRead);
+      };
     }
   }, [user]);
 
