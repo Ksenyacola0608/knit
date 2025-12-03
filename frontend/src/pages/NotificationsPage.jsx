@@ -49,7 +49,9 @@ const NotificationsPage = () => {
     try {
       await api.patch('/notifications/read-all');
       toast.success('Все уведомления отмечены как прочитанные');
-      fetchNotifications();
+      await fetchNotifications();
+      // Trigger event to update header counter
+      window.dispatchEvent(new Event('notificationRead'));
     } catch (error) {
       toast.error('Ошибка');
     }
