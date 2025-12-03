@@ -3,7 +3,7 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 import uuid
 from datetime import datetime, timezone
 
-from models import Review, ReviewCreate, OrderStatus, NotificationCreate, NotificationType
+from models import Review, ReviewCreate, ReviewDispute, OrderStatus, NotificationCreate, NotificationType
 from utils import get_current_user
 from database import get_db
 
