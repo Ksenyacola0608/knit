@@ -157,3 +157,50 @@ async def get_service_reviews(
             review["created_at"] = datetime.fromisoformat(review["created_at"])
     
     return {"total": total, "skip": skip, "limit": limit, "reviews": reviews}
+
+
+@router.post("/{review_id}/dispute", response_model=dict)
+async def dispute_review(
+    review_id: str,
+    dispute_data: ReviewDispute,
+    current_user: dict = Depends(get_current_user),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    # Get review
+    review = await db.reviews.find_one({"id": review_id})
+    if not review:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Review not found")
+    
+    # Check if user is the master
+    if review["master_id"] != current_user["id"]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only the master can dispute this review"
+        )
+    
+    # Check if already disputed
+    if review.get("is_disputed"):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Review already disputed"
+        )
+    
+    # Mark as disputed
+    await db.reviews.update_one(
+        {"id": review_id},
+        {"$set": {
+            "is_disputed": True,
+            "dispute_reason": dispute_data.reason
+        }}
+    )
+    
+    # Create notification for admins and customer
+    await create_notification(db, NotificationCreate(
+        user_id=review["customer_id"],
+        type=NotificationType.REVIEW_DISPUTED,
+        title="Отзыв оспорен",
+        content="Мастер оспорил ваш отзыв. Администрация рассмотрит обращение.",
+        link=f"/orders/{review['order_id']}"
+    ))
+    
+    return {"message": "Review disputed successfully"}
