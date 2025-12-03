@@ -139,10 +139,18 @@ const ServicesPage = () => {
                 to={`/services/${service.id}`}
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition group"
               >
-                <div className="h-48 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
-                  <div className="text-center p-4">
-                    <p className="text-6xl">🎨</p>
-                  </div>
+                <div className="h-48 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center overflow-hidden">
+                  {service.images && service.images.length > 0 ? (
+                    <img 
+                      src={`${process.env.REACT_APP_BACKEND_URL}${service.images[0]}`}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="text-center p-4">
+                      <p className="text-6xl">🎨</p>
+                    </div>
+                  )}
                 </div>
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-2">
