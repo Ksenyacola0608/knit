@@ -119,7 +119,7 @@ async def get_master_reviews(
         
         service = await db.services.find_one({"id": review["service_id"]}, {"_id": 0, "id": 1, "title": 1})
 
-@router.get("/master/{master_id}", response_model=dict)
+@router.get("/master/{master_id}")
 async def get_master_reviews(
     master_id: str,
     skip: int = 0,
@@ -141,6 +141,10 @@ async def get_master_reviews(
         if customer:
             review["customer_name"] = customer["name"]
             review["customer_avatar"] = customer.get("avatar")
+        
+        # Convert datetime if needed
+        if isinstance(review.get("created_at"), str):
+            review["created_at"] = datetime.fromisoformat(review["created_at"]).isoformat()
     
     total = await db.reviews.count_documents({"master_id": master_id})
     
