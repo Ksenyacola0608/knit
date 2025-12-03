@@ -149,8 +149,18 @@ const ServiceDetailPage = () => {
               <div className="bg-white rounded-lg shadow-md p-8 mt-8">
                 <h3 className="text-2xl font-bold mb-6">О мастере</h3>
                 <div className="flex items-start gap-6">
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center text-white text-3xl font-bold">
-                    {service.master.name.charAt(0)}
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center overflow-hidden flex-shrink-0">
+                    {service.master.avatar ? (
+                      <img 
+                        src={`${process.env.REACT_APP_BACKEND_URL}${service.master.avatar}`}
+                        alt={service.master.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-white text-3xl font-bold">
+                        {service.master.name.charAt(0)}
+                      </span>
+                    )}
                   </div>
                   <div className="flex-1">
                     <Link
