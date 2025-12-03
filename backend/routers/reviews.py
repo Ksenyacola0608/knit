@@ -143,6 +143,16 @@ async def get_master_reviews(
             review["customer_avatar"] = customer.get("avatar")
     
     total = await db.reviews.count_documents({"master_id": master_id})
+
+@router.get("/order/{order_id}", response_model=dict)
+async def get_order_review(
+    order_id: str,
+    current_user: dict = Depends(get_current_user),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    review = await db.reviews.find_one({"order_id": order_id}, {"_id": 0})
+    return {"review": review}
+
     
     return {"reviews": reviews, "total": total, "skip": skip, "limit": limit}
 
