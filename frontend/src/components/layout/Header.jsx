@@ -17,13 +17,8 @@ const Header = () => {
 
   const fetchUnreadCounts = async () => {
     try {
-      const [notifResp, chatsResp] = await Promise.all([
-        api.get('/notifications?unread_only=true&limit=1'),
-        api.get('/messages/chats')
-      ]);
+      const notifResp = await api.get('/notifications?unread_only=true&limit=1');
       setUnreadNotifications(notifResp.data.unread_count || 0);
-      const unread = chatsResp.data.chats.reduce((sum, chat) => sum + (chat.unread_count || 0), 0);
-      setUnreadMessages(unread);
     } catch (err) {
       console.error('Error fetching unread counts:', err);
     }
