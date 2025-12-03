@@ -143,7 +143,6 @@ async def get_master_reviews(
             review["customer_avatar"] = customer.get("avatar")
     
     total = await db.reviews.count_documents({"master_id": master_id})
-
     
     return {"reviews": reviews, "total": total, "skip": skip, "limit": limit}
 
