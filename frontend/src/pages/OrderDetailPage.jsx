@@ -278,6 +278,35 @@ const OrderDetailPage = () => {
                 </p>
               </div>
             )}
+
+            {/* Review Section - только для клиента после завершения заказа */}
+            {isCustomer && order.status === 'completed' && (
+              <div className="pt-6 border-t border-gray-200">
+                {hasReview ? (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <p className="text-blue-800">
+                      ✅ Вы уже оставили отзыв на этот заказ
+                    </p>
+                  </div>
+                ) : showReviewForm ? (
+                  <ReviewForm 
+                    order={order}
+                    onReviewSubmitted={() => {
+                      setHasReview(true);
+                      setShowReviewForm(false);
+                      toast.success('Спасибо за отзыв!');
+                    }}
+                  />
+                ) : (
+                  <button
+                    onClick={() => setShowReviewForm(true)}
+                    className="w-full bg-yellow-500 text-white py-3 rounded-lg font-semibold hover:bg-yellow-600 transition"
+                  >
+                    ⭐ Оставить отзыв мастеру
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
