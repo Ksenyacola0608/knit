@@ -16,6 +16,8 @@ const OrderDetailPage = () => {
   const [newStatus, setNewStatus] = useState('');
   const [agreedPrice, setAgreedPrice] = useState('');
   const [deadline, setDeadline] = useState('');
+  const [hasReview, setHasReview] = useState(false);
+  const [showReviewForm, setShowReviewForm] = useState(false);
 
   useEffect(() => {
     if (!user) {
