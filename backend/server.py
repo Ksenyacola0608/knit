@@ -50,6 +50,7 @@ api_router.include_router(orders_router)
 api_router.include_router(reviews_router)
 api_router.include_router(messages_router)
 api_router.include_router(notifications_router)
+api_router.include_router(upload_router)
 
 # Include the router in the main app
 app.include_router(api_router)
