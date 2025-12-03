@@ -118,6 +118,34 @@ async def get_master_reviews(
             review["customer"] = customer
         
         service = await db.services.find_one({"id": review["service_id"]}, {"_id": 0, "id": 1, "title": 1})
+
+@router.get("/master/{master_id}", response_model=dict)
+async def get_master_reviews(
+    master_id: str,
+    skip: int = 0,
+    limit: int = 20,
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    # Get reviews with customer info
+    reviews = await db.reviews.find(
+        {"master_id": master_id},
+        {"_id": 0}
+    ).sort("created_at", -1).skip(skip).limit(limit).to_list(limit)
+    
+    # Enrich with customer info
+    for review in reviews:
+        customer = await db.users.find_one(
+            {"id": review["customer_id"]},
+            {"_id": 0, "name": 1, "avatar": 1}
+        )
+        if customer:
+            review["customer_name"] = customer["name"]
+            review["customer_avatar"] = customer.get("avatar")
+    
+    total = await db.reviews.count_documents({"master_id": master_id})
+    
+    return {"reviews": reviews, "total": total, "skip": skip, "limit": limit}
+
         if service:
             review["service"] = service
         
